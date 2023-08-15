@@ -1,17 +1,8 @@
-import { useContext } from "react";
 import CheckOut from "../../assets/images/checkout/checkout.png";
-import { UserContext } from "../../Providers";
+
 
 const Orderlist = () => {
-    const { loading } = useContext(UserContext)
-
-
     const orders = JSON.parse(sessionStorage.getItem('orders'))
-
-
-
-
-
     console.log(orders)
 
     return (
