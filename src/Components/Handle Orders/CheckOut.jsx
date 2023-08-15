@@ -1,13 +1,11 @@
-import { Link, useLoaderData, useParams } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import checkout from '../../assets/images/checkout/checkout.png';
 import { useContext } from 'react';
 import { UserContext } from '../../Providers';
 
 const CheckOut = () => {
-    //const params = useParams();
     const data = useLoaderData()
-    const { user , setLoading } = useContext(UserContext)
-    //console.log(params, data)
+    const { user, setLoading } = useContext(UserContext)
     setLoading(true)
     const handleOrder = async (event) => {
         event.preventDefault();
@@ -16,7 +14,7 @@ const CheckOut = () => {
         const phone = event.target.phone.value;
         const email = event.target.email.value;
         const message = event.target.message.value;
-        
+
         var order = {};
         var quantity = 1;
         var newOrderList = [];
@@ -25,38 +23,38 @@ const CheckOut = () => {
 
         const emailcheck = oldOrderList?.find((order) => order.email === email);
 
-        const idCheck = oldOrderList?.find((order) => order._id === data._id );
+        const idCheck = oldOrderList?.find((order) => order._id === data._id);
 
-        order = { _id: data._id, name: (firstName + ' ' + lastName), phone, email, message , quantity }
+        order = { _id: data._id, name: (firstName + ' ' + lastName), phone, email, message, quantity }
         //console.log(emailcheck)
 
 
-        if(oldOrderList){
+        if (oldOrderList) {
             {
-                if(idCheck && emailcheck){
-                 emailcheck.quantity ++
-                 newOrderList = [...oldOrderList]
+                if (idCheck && emailcheck) {
+                    emailcheck.quantity++
+                    newOrderList = [...oldOrderList]
                 }
-                else{
-                    newOrderList = [...oldOrderList, order ]
+                else {
+                    newOrderList = [...oldOrderList, order]
                 }
-           }
-             
+            }
+
         }
-        else{
-              newOrderList = [order]
+        else {
+            newOrderList = [order]
         }
 
 
-       const orders = JSON.stringify(newOrderList)
-       sessionStorage.setItem('orders', orders)
+        const orders = JSON.stringify(newOrderList)
+        sessionStorage.setItem('orders', orders)
 
         event.target.firstName.value = '';
         event.target.lastName.value = '';
         event.target.phone.value = '';
         event.target.email.value = '';
         event.target.message.value = ''
-
+        
         setLoading(false)
 
     }
