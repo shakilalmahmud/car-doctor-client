@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SingleProduct from './SingleProduct';
 
 
 const Products = () => {
 
     const [products, setProducts] = useState([])
-    fetch('http://localhost:3000/products')
-        .then(res => res.json())
-        .then(data => setProducts(data))
+
+    useEffect(() => {
+        fetch('http://localhost:3000/products')
+            .then(res => res.json())
+            .then(data => setProducts(data))
+    }, [])
 
     return (
         <div className='space-y-4 mt-8 '>

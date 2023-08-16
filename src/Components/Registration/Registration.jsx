@@ -3,6 +3,7 @@ import signup from '../../assets/images/login/login.svg'
 import { AiFillGoogleSquare, AiFillFacebook } from 'react-icons/ai';
 import { FaLinkedin } from 'react-icons/fa';
 import { UserContext } from '../../Providers';
+import { Helmet } from 'react-helmet-async';
 
 
 const Registration = () => {
@@ -21,7 +22,7 @@ const Registration = () => {
                 .then(() => {
                     handleLoginWithEmailandPassword(auth, email, password)
                         .then(() => {
-                             console,alert('successfully Log in')
+                             window.alert('successfully Log in')
                         })
                         .catch((error) => console.error(error))
                 })
@@ -30,7 +31,7 @@ const Registration = () => {
         else {
             handleLoginWithEmailandPassword(auth, email, password)
                 .then(() => {
-                  console.alert('successfully log in')
+                  window.alert('successfully log in')
 
                 })
                 .catch((error) => console.error(error))
@@ -39,6 +40,9 @@ const Registration = () => {
 
     return (
         <section className='flex justify-around items-center my-12'>
+            <Helmet>
+                <title>car-Doctor/Registration</title>
+            </Helmet>
             {/* registration page left side image */}
             <div>
                 <img src={signup} className='' alt="" />
@@ -46,7 +50,7 @@ const Registration = () => {
             {/* registration page left side image*/}
 
             {/* login or sign up form */}
-            <form className='border-2 rounded-lg pt-20 pb-8 space-y-8' onSubmit={() => handleRegistration()}>
+            <form className='border-2 rounded-lg pt-20 pb-8 space-y-8' onSubmit={handleRegistration}>
                 <h1 className='font-bold text-3xl text-slate-950'>{isLogin ? 'Log In' : 'Sign Up'}</h1>
                 {
                     !isLogin ?

@@ -16,12 +16,13 @@ import NewService from './Components/NewService/NewService';
 import CheckOut from './Components/Handle Orders/CheckOut';
 import Errorpage from './Components/Errorpage';
 import Orderlist from './Components/Handle Orders/Orderlist';
+import { HelmetProvider } from 'react-helmet-async';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout></Layout>,
-    errorElement : <Errorpage></Errorpage>,
+    errorElement: <Errorpage></Errorpage>,
     children: [
       {
         path: '/',
@@ -31,13 +32,13 @@ const router = createBrowserRouter([
         path: '/services/:id',
         element: <ServiceDetails ></ServiceDetails>,
         loader: ({ params }) => {
-          return fetch(`https://car-server-ggpcw5za6-shakilam1092-gmailcom.vercel.app/services/${params.id}`)
+          return fetch(`http://localhost:3000/services/${params.id}`)
         }
       },
       {
         path: '/services',
         element: <Services></Services>,
-        loader: () => fetch('https://car-server-ggpcw5za6-shakilam1092-gmailcom.vercel.app/services')
+        loader: () => fetch('http://localhost:3000/services')
 
       },
       {
@@ -56,13 +57,13 @@ const router = createBrowserRouter([
         path: '/services/checkout/:id',
         element: <CheckOut></CheckOut>,
         loader: ({ params }) => {
-          return fetch(`https://car-server-ggpcw5za6-shakilam1092-gmailcom.vercel.app/services/${params.id}`)
-          
+          return fetch(`http://localhost:3000/services/${params.id}`)
+
         }
 
       },
       {
-        path :'/orderlist',
+        path: '/orderlist',
         element: <Orderlist></Orderlist>
       }
     ]
@@ -71,10 +72,12 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <div className='max-w-screen-xl mx-auto text-center px-10'>
-      <Providers>
-        <RouterProvider router={router} />
-      </Providers>
-    </div>
+    <HelmetProvider>
+      <div className='max-w-screen-xl mx-auto text-center px-10'>
+        <Providers>
+          <RouterProvider router={router} />
+        </Providers>
+      </div>
+    </HelmetProvider>
   </React.StrictMode>,
 )

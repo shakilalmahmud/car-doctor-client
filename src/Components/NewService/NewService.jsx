@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import checkout from '../../assets/images/checkout/checkout.png';
 import { useContext } from 'react';
 import { UserContext } from '../../Providers';
+import { Helmet } from 'react-helmet-async';
 
 const NewService = () => {
 
@@ -22,7 +23,7 @@ const NewService = () => {
         const newService = { service_id, title, price, img, facility: JSON.stringify(services[1].facility), description }
 
         try {
-            await fetch("https://car-server-ggpcw5za6-shakilam1092-gmailcom.vercel.app/addnewservice", {
+            await fetch("http://localhost:3000/addnewservice", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -48,6 +49,9 @@ const NewService = () => {
 
     return (
         <section className='space-y-8'>
+            <Helmet>
+                <title>car-doctor/newservice</title>
+            </Helmet>
             {/* chechout banner */}
             <div className='relative rounded-xl'>
                 <img src={checkout} className='w-full' alt="" />

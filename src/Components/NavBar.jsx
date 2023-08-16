@@ -2,14 +2,14 @@ import { useContext, useState } from 'react';
 import logo from '../assets/logo.png';
 import { AiOutlineShopping, AiOutlineSearch } from 'react-icons/ai';
 //import { HiMiniArrowPathRoundedSquare } from 'react-icons/hi';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link,  useNavigate } from 'react-router-dom';
 import { UserContext } from '../Providers';
 
 const NavBar = () => {
-
+    const navigate = useNavigate()
     const { user, handleLogOut, setLogin, auth , setUser} = useContext(UserContext)
     const [isSearch, setSearch] = useState(false)
-    const navigate = useNavigate()
+    
 
     /** to create user for the portal*/
     const handleSignUp = () => {

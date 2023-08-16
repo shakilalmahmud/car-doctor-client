@@ -24,8 +24,8 @@ const Providers = ({ children }) => {
         return signOut(auth)
     }
 
-    
-   
+
+
 
     // const handleProfileUpdate = (auth, name) =>{
     //     return updateProfile (auth.currentUser, {
@@ -34,7 +34,7 @@ const Providers = ({ children }) => {
 
     // }
 
-    
+
 
     onAuthStateChanged(auth, user => {
         if (user) {
@@ -47,14 +47,12 @@ const Providers = ({ children }) => {
     })
 
     useEffect(() => {
-        setLoading(true)
-        fetch('https://car-server-ggpcw5za6-shakilam1092-gmailcom.vercel.app/services')
+        fetch('http://localhost:3000/services')
             .then(res => res.json())
             .then(data => {
                 setServices(data)
-                setLoading(false)
             })
-    }, [loading, services])
+    }, [])
 
     const info = {
         services,
@@ -68,7 +66,7 @@ const Providers = ({ children }) => {
         loading,
         setLoading,
         handleLogOut,
-        }
+    }
 
     return (
         <UserContext.Provider value={info}>

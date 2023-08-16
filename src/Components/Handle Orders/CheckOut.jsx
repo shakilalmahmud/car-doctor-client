@@ -2,12 +2,13 @@ import { Link, useLoaderData } from 'react-router-dom';
 import checkout from '../../assets/images/checkout/checkout.png';
 import { useContext } from 'react';
 import { UserContext } from '../../Providers';
+import { Helmet } from 'react-helmet-async';
 
 const CheckOut = () => {
     const data = useLoaderData()
-    const { user, setLoading } = useContext(UserContext)
-    setLoading(true)
-    const handleOrder = async (event) => {
+    const { user } = useContext(UserContext)
+
+    const handleOrder = (event) => {
         event.preventDefault();
         const firstName = event.target.firstName.value;
         const lastName = event.target.lastName.value;
@@ -19,7 +20,7 @@ const CheckOut = () => {
         var quantity = 1;
         var newOrderList = [];
 
-        var oldOrderList = JSON.parse(sessionStorage.getItem('orders'));
+        var oldOrderList = JSON.parse(localStorage.getItem('orders'));
 
         const emailcheck = oldOrderList?.find((order) => order.email === email);
 
@@ -29,39 +30,49 @@ const CheckOut = () => {
         //console.log(emailcheck)
 
 
-        if (oldOrderList) {
-            {
-                if (idCheck && emailcheck) {
-                    emailcheck.quantity++
-                    newOrderList = [...oldOrderList]
+        try {
+            if (oldOrderList) {
+                {
+                    if (idCheck && emailcheck) {
+                        emailcheck.quantity++
+                        newOrderList = [...oldOrderList]
+                    }
+                    else {
+                        newOrderList = [...oldOrderList, order]
+                    }
                 }
-                else {
-                    newOrderList = [...oldOrderList, order]
-                }
+
+            }
+            else {
+                newOrderList = [order]
             }
 
+
+            const orders = JSON.stringify(newOrderList)
+            localStorage.setItem('orders', orders)
         }
-        else {
-            newOrderList = [order]
+        catch (error) {
+            console.error(error)
+        }
+        finally {
+
+            event.target.firstName.value = '';
+            event.target.lastName.value = '';
+            event.target.phone.value = '';
+            event.target.email.value = '';
+            event.target.message.value = ''
         }
 
 
-        const orders = JSON.stringify(newOrderList)
-        sessionStorage.setItem('orders', orders)
-
-        event.target.firstName.value = '';
-        event.target.lastName.value = '';
-        event.target.phone.value = '';
-        event.target.email.value = '';
-        event.target.message.value = ''
-        
-        setLoading(false)
 
     }
 
 
     return (
         <section className='space-y-8'>
+            <Helmet>
+                <title>car-doctor/checkout</title>
+            </Helmet>
             {/* chechout banner */}
             <div className='relative rounded-xl'>
                 <img src={checkout} className='w-full' alt="" />
