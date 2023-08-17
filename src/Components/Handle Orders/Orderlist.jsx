@@ -24,9 +24,32 @@ const Orderlist = () => {
     /** handle order confirmed */
 
     const handleOrderConfirm = (order) => {
-        const orderToShow = orders.find((ord) => ord === order)
-        orderToShow.confirmation = true
-        localStorage.setItem('orders', JSON.stringify(orders))
+        try {
+            const orderToShow = orders.find((ord) => ord === order)
+            orderToShow.confirmation = true
+            localStorage.setItem('orders', JSON.stringify(orders))
+        }
+        catch(error){
+            console.error(error)
+        }
+
+        finally {
+            //const desiredOrders = JSON.parse(localStorage.getItem('orders'));
+            //const desiredOrder = desiredOrders.find((ord) => ord._id === order._id)
+
+            fetch("http://localhost:3000/orderlist", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(order),
+            })
+                .then((res) => {
+                    const result = res.json();
+                    console.log("Success:", result);
+
+                })
+        }
     }
 
     /** handle order confirmed */
@@ -39,6 +62,34 @@ const Orderlist = () => {
     }
 
     /** clear cart */
+
+    /** orderlist to mongodb */
+
+    // useEffect(() => {
+    //     try {
+    //         fetch("http://localhost:3000/orderlist", {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify(orders),
+    //         })
+    //             .then((res) => {
+    //                 const result = res.json();
+    //                 console.log("Success:", result);
+
+    //             })
+
+    //     }
+    //     catch (error) {
+    //         console.error("Error:", error);
+    //     }
+    //     finally {
+    //         console.log('successfully added')
+    //     }
+    // }, [orders])
+
+    /** orderlist to mongodb */
 
     return (
         <section className="">

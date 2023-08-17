@@ -1,4 +1,4 @@
-import { Link, useLoaderData, useNavigate } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import checkout from '../../assets/images/checkout/checkout.png';
 import { useContext } from 'react';
 import { UserContext } from '../../Providers';
@@ -35,7 +35,7 @@ const CheckOut = () => {
             if (oldOrderList) {
                 {
                     if (idCheck && emailCheck) {
-                        idCheck.quantity ++
+                        idCheck.quantity++
                         newOrderList = [...oldOrderList]
                     }
                     else {

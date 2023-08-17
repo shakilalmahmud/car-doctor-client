@@ -59,7 +59,7 @@ const NavBar = () => {
                 {
                     !user ?
                         <button className="btn btn-outline btn-warning hover:bg-[#FF3811] hover:text-white" onClick={handleSignUp}>Sign Up</button> :
-                        <button className="btn btn-outline btn-warning hover:bg-[#FF3811] hover:text-white" >Appointment</button>
+                        <button className="btn btn-outline btn-warning hover:bg-[#FF3811] hover:text-white" onClick={() => navigate('/ordersconfirmed')} >Appointment</button>
                 }
             </div>
 

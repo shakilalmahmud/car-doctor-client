@@ -17,6 +17,7 @@ import CheckOut from './Components/Handle Orders/CheckOut';
 import Errorpage from './Components/Errorpage';
 import Orderlist from './Components/Handle Orders/Orderlist';
 import { HelmetProvider } from 'react-helmet-async';
+import Confirmedorders from './Components/Handle Orders/Confirmedorders';
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
       {
         path: '/orderlist',
         element: <Orderlist></Orderlist>
+      },
+      {
+        path: '/ordersconfirmed',
+        element : <Confirmedorders></Confirmedorders>
       }
     ]
   },
