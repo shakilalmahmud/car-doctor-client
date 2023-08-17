@@ -7,34 +7,30 @@ import { Helmet } from 'react-helmet-async';
 
 
 const Registration = () => {
-    const { isLogin, setLogin, handleCreateEmailandPassword, handleLoginWithEmailandPassword, auth } = useContext(UserContext)
 
+    const { isLogin, setLogin, handleSignup, handleSignIn } = useContext(UserContext)
 
-    const handleRegistration = (event) => {
+    const handleRegistration = async(event) => {
         event.preventDefault()
-        //const name = event.target.name.value;
         const email = event.target.email.value;
         const password = event.target.password.value;
 
-        if (!isLogin) {
-
-            handleCreateEmailandPassword(auth, email, password)
-                .then(() => {
-                    handleLoginWithEmailandPassword(auth, email, password)
-                        .then(() => {
-                             window.alert('successfully Log in')
-                        })
-                        .catch((error) => console.error(error))
-                })
-                .catch((error) => console.error(error))
+        try{
+            if (!isLogin) {
+                await handleSignup(email, password)
+                console.log('sign up successfully')
+            } else {
+               await handleSignIn(email, password)
+                console.log('login successfully')
+            }
         }
-        else {
-            handleLoginWithEmailandPassword(auth, email, password)
-                .then(() => {
-                  window.alert('successfully log in')
-
-                })
-                .catch((error) => console.error(error))
+        catch(error){
+                console.log(error)
+        }
+        finally{
+            event.target.email.value =''
+            event.target.password.value = ''
+            event.target.name.value = ''
         }
     }
 

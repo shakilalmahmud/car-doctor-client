@@ -1,8 +1,9 @@
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import checkout from '../../assets/images/checkout/checkout.png';
 import { useContext } from 'react';
 import { UserContext } from '../../Providers';
 import { Helmet } from 'react-helmet-async';
+import moment from 'moment/moment';
 
 const CheckOut = () => {
     const data = useLoaderData()
@@ -19,22 +20,22 @@ const CheckOut = () => {
         var order = {};
         var quantity = 1;
         var newOrderList = [];
+        const date = moment().format('llll');
 
         var oldOrderList = JSON.parse(localStorage.getItem('orders'));
 
-        const emailcheck = oldOrderList?.find((order) => order.email === email);
-
+        const emailCheck = oldOrderList?.find((order) => order.email === data.email);
         const idCheck = oldOrderList?.find((order) => order._id === data._id);
 
-        order = { _id: data._id, name: (firstName + ' ' + lastName), phone, email, message, quantity }
-        //console.log(emailcheck)
+        order = { _id: data._id, name: (firstName + ' ' + lastName), phone, email, message, quantity, date }
+        //console.log(emailcheck.quantity)
 
 
         try {
             if (oldOrderList) {
                 {
-                    if (idCheck && emailcheck) {
-                        emailcheck.quantity++
+                    if (idCheck && emailCheck) {
+                        idCheck.quantity ++
                         newOrderList = [...oldOrderList]
                     }
                     else {
@@ -61,6 +62,7 @@ const CheckOut = () => {
             event.target.phone.value = '';
             event.target.email.value = '';
             event.target.message.value = ''
+            window.history.back()
         }
 
 
@@ -93,7 +95,7 @@ const CheckOut = () => {
                 </div>
                 <div className='grid grid-cols-2 gap-4'>
                     <input type="number" name="phone" id="" placeholder='Your Phone' className='w-full h-12 px-4 rounded-lg text-slate-600 font-semibold' required />
-                    <input type="email" name="email" id="" placeholder='Your Email' className='w-full h-12 px-4 rounded-lg text-slate-600 font-semibold' defaultValue={user?.email} required />
+                    <input type="email" name="email" id="" placeholder='Your Email' className='w-full h-12 px-4 rounded-lg text-slate-600 font-semibold' value={user?.email} required />
                 </div>
                 <textarea name="message" className='w-full h-40 p-4 text-slate-600 font-semibold' placeholder='Your Message' ></textarea>
                 <button type='submit' className='bg-[#FF3811] text-white font-bold text-2xl px-8 py-4 w-full rounded-lg '>Confirm Order</button>

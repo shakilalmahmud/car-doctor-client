@@ -1,4 +1,4 @@
-import { Link, useLoaderData, useNavigate } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate, } from 'react-router-dom';
 import checkout from '../../assets/images/checkout/checkout.png'
 import Facility from './Facility';
 import { useContext } from 'react';
@@ -8,11 +8,10 @@ import Downloadpart from './Downloadpart';
 import CarDoctorHelpline from './CarDoctorhelpline';
 
 const ServiceDetails = () => {
-
     const service = useLoaderData()
     const navigate = useNavigate()
     const { services } = useContext(UserContext)
-    const { img, price, title, description, facility, _id } = service
+    const { img, price, title, description, _id, facility } = service
     const handleCheckout = (_id) => {
         navigate(`/services/checkout/${_id}`)
     }
@@ -43,7 +42,7 @@ const ServiceDetails = () => {
                     </div>
                     <div className='grid grid-cols-2 gap-2'>
                         {
-                            facility.map(fac => <Facility facility={fac} key={fac.name}></Facility>)
+                            facility? facility.map(fac => <Facility facility={fac} key={fac.name}></Facility>) : ''
                         }
                     </div>
                     <div className='text-left space-y-4'>

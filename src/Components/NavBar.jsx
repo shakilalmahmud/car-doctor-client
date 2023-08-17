@@ -2,14 +2,14 @@ import { useContext, useState } from 'react';
 import logo from '../assets/logo.png';
 import { AiOutlineShopping, AiOutlineSearch } from 'react-icons/ai';
 //import { HiMiniArrowPathRoundedSquare } from 'react-icons/hi';
-import { Link,  useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../Providers';
 
 const NavBar = () => {
     const navigate = useNavigate()
-    const { user, handleLogOut, setLogin, auth , setUser} = useContext(UserContext)
+    const { user, handleSignOut, setLogin } = useContext(UserContext)
     const [isSearch, setSearch] = useState(false)
-    
+
 
     /** to create user for the portal*/
     const handleSignUp = () => {
@@ -21,14 +21,6 @@ const NavBar = () => {
     const handleLogin = () => {
         setLogin(true)
         navigate('/signup')
-    }
-
-     /**to handle sign out from the portal */
-
-     const handleSignOut = () => {
-        handleLogOut(auth)
-            .then(() => setUser(false))
-            .catch((error) => console.error(error))
     }
 
 
@@ -50,7 +42,7 @@ const NavBar = () => {
             </div>
             <div className='flex gap-4'>
                 {/* <HiMiniArrowPathRoundedSquare></HiMiniArrowPathRoundedSquare> */}
-                <AiOutlineShopping size={30} onClick={() => navigate('/shopping')}></AiOutlineShopping>
+                <AiOutlineShopping size={30} onClick={() => navigate('/orderlist')}></AiOutlineShopping>
                 {
                     isSearch ? <input type="text" name="text" onMouseLeave={() => setSearch(false)} className='border-2 rounded w-36 h-8 text-center' placeholder='Search here' /> :
                         <AiOutlineSearch size={30} onClick={() => { setSearch(true) }} ></AiOutlineSearch>
